@@ -72,7 +72,7 @@
 
         <!-- 添加或修改能效预警对话框 -->
         <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-            <el-form ref="checkpointRef" :model="form" :rules="rules" label-width="80px">
+            <el-form ref="checkpointRef" :model="form" :rules="rules" label-width="100px">
                 <el-form-item label="检测点名称" prop="name">
                     <el-input v-model="form.name" placeholder="请输入检测点名称" />
                 </el-form-item>

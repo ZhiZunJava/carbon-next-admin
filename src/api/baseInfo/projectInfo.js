@@ -42,12 +42,3 @@ export function delProjectInfo(id) {
     method: 'delete'
   })
 }
-
-// 导出项目维护
-export function exportProjectInfo(query) {
-  return request({
-    url: '/baseInfo/projectInfo/export',
-    method: 'get',
-    params: query
-  })
-}
