@@ -42,12 +42,3 @@ export function delMaterialCategory(id) {
     method: 'delete'
   })
 }
-
-// 导出物料分类
-export function exportMaterialCategory(query) {
-  return request({
-    url: '/material/materialCategory/export',
-    method: 'get',
-    params: query
-  })
-}

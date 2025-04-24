@@ -1,7 +1,7 @@
 {
   "name": "admin",
   "version": "3.8.9",
-  "description": "双碳管理系统",
+  "description": "双碳管理系统 Vue3版本",
   "author": "程安宁",
   "license": "MIT",
   "type": "module",
