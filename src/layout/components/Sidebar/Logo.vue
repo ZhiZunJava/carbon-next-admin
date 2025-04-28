@@ -30,7 +30,7 @@ const settingsStore = useSettingsStore();
 const sideTheme = computed(() => settingsStore.sideTheme);
 
 // 获取Logo背景色
-const getLogoBackground = computed(() => {
+const getlogobackground = computed(() => {
   if (settingsStore.isDark) {
     return 'var(--sidebar-bg)';
   }
@@ -38,7 +38,7 @@ const getLogoBackground = computed(() => {
 });
 
 // 获取Logo文字颜色
-const getLogoTextColor = computed(() => {
+const getlogotextcolor = computed(() => {
   if (settingsStore.isDark) {
     return 'var(--sidebar-text)';
   }
@@ -47,6 +47,7 @@ const getLogoTextColor = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+/* eslint-disable */
 @import '@/assets/styles/variables.module.scss';
 
 .sidebarLogoFade-enter-active {

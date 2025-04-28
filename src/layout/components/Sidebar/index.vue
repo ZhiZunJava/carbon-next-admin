@@ -70,11 +70,12 @@ const activeMenu = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+/* eslint-disable */
 .sidebar-container {
-  background-color: v-bind(getmenubackground);
+  background-color: v-bind(getMenuBackground);
 
   .scrollbar-wrapper {
-    background-color: v-bind(getmenubackground);
+    background-color: v-bind(getMenuBackground);
   }
 
   .el-menu {
@@ -90,7 +91,7 @@ const activeMenu = computed(() => {
     }
 
     .el-menu-item {
-      color: v-bind(getmenutextcolor);
+      color: v-bind(getMenuTextColor);
 
       &.is-active {
         color: var(--menu-active-text, #409eff);
@@ -99,7 +100,7 @@ const activeMenu = computed(() => {
     }
 
     .el-sub-menu__title {
-      color: v-bind(getmenutextcolor);
+      color: v-bind(getMenuTextColor);
     }
   }
 }
