@@ -1,0 +1,44 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build for production
+      run: npm run build:prod
+      env:
+        NODE_ENV: production
+        
+    - name: Build for staging
+      run: npm run build:stage
+      env:
+        NODE_ENV: staging
+        
+    - name: Upload production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: production-build
+        path: dist
+        
+    - name: Upload staging artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: staging-build
+        path: dist
