@@ -1,5 +1,5 @@
-import useTagsViewStore from '@/store/modules/tagsView'
-import router from '@/router'
+import router from '@/router';
+import useTagsViewStore from '@/store/modules/tagsView';
 
 export default {
   // 刷新当前tab页签
@@ -9,18 +9,20 @@ export default {
       matched.forEach((m) => {
         if (m.components && m.components.default && m.components.default.name) {
           if (!['Layout', 'ParentView'].includes(m.components.default.name)) {
-            obj = { name: m.components.default.name, path: path, query: query };
+            obj = { name: m.components.default.name, path, query };
           }
         }
       });
     }
-    return useTagsViewStore().delCachedView(obj).then(() => {
-      const { path, query } = obj
-      router.replace({
-        path: '/redirect' + path,
-        query: query
-      })
-    })
+    return useTagsViewStore()
+      .delCachedView(obj)
+      .then(() => {
+        const { path, query } = obj;
+        router.replace({
+          path: `/redirect${path}`,
+          query,
+        });
+      });
   },
   // 关闭当前tab页签，打开新页签
   closeOpenPage(obj) {
@@ -32,13 +34,15 @@ export default {
   // 关闭指定tab页签
   closePage(obj) {
     if (obj === undefined) {
-      return useTagsViewStore().delView(router.currentRoute.value).then(({ visitedViews }) => {
-        const latestView = visitedViews.slice(-1)[0]
-        if (latestView) {
-          return router.push(latestView.fullPath)
-        }
-        return router.push('/');
-      });
+      return useTagsViewStore()
+        .delView(router.currentRoute.value)
+        .then(({ visitedViews }) => {
+          const latestView = visitedViews.slice(-1)[0];
+          if (latestView) {
+            return router.push(latestView.fullPath);
+          }
+          return router.push('/');
+        });
     }
     return useTagsViewStore().delView(obj);
   },
@@ -65,5 +69,5 @@ export default {
   // 修改tab页签
   updatePage(obj) {
     return useTagsViewStore().updateVisitedView(obj);
-  }
-}
+  },
+};

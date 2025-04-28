@@ -9,7 +9,7 @@ export const formConf = {
   disabled: false,
   span: 24,
   formBtns: true,
-}
+};
 
 export const inputComponents = [
   {
@@ -104,7 +104,7 @@ export const inputComponents = [
     changeTag: true,
     document: 'https://element-plus.org/zh-CN/component/input-number',
   },
-]
+];
 
 export const selectComponents = [
   {
@@ -407,7 +407,7 @@ export const selectComponents = [
     tip: '只能上传不超过 2MB 的文件',
     style: { width: '100%' },
   },
-]
+];
 
 export const layoutComponents = [
   {
@@ -436,7 +436,7 @@ export const layoutComponents = [
     disabled: false,
     document: 'https://element-plus.org/zh-CN/component/button',
   },
-]
+];
 
 // 组件rule的触发方式，无触发方式的组件不生成rule
 export const trigger = {
@@ -449,4 +449,4 @@ export const trigger = {
   'el-time-picker': 'change',
   'el-date-picker': 'change',
   'el-rate': 'change',
-}
+};

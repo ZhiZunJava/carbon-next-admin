@@ -1,11 +1,5 @@
-<template>
-</template>
+<template></template>
 
-<script setup name="Index">
+<script setup name="Index"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
-
+<style scoped lang="scss"></style>

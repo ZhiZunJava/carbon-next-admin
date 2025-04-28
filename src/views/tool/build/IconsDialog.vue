@@ -1,11 +1,23 @@
 <template>
   <div class="icon-dialog">
-    <el-dialog v-model="value" width="980px" :close-on-click-modal="false" :modal-append-to-body="false" @open="onOpen"
-      @close="onClose">
+    <el-dialog
+      v-model="value"
+      width="980px"
+      :close-on-click-modal="false"
+      :modal-append-to-body="false"
+      @open="onOpen"
+      @close="onClose"
+    >
       <template #header="{ close, titleId, titleClass }">
         选择图标
-        <el-input v-model="key" size="small" :style="{ width: '260px' }" placeholder="请输入图标名称" prefix-icon="Search"
-          clearable />
+        <el-input
+          v-model="key"
+          size="small"
+          :style="{ width: '260px' }"
+          placeholder="请输入图标名称"
+          prefix-icon="Search"
+          clearable
+        />
       </template>
       <ul class="icon-ul">
         <li v-for="icon in iconList" :key="icon" :class="active === icon ? 'active-item' : ''" @click="onSelect(icon)">
@@ -21,35 +33,35 @@
   </div>
 </template>
 <script setup>
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { watch } from 'vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { watch } from 'vue';
 
-const iconList = ref([])
-const originList = []
-const key = ref('')
-const active = ref('')
-const emit = defineEmits(['select'])
-const value = defineModel()
+const iconList = ref([]);
+const originList = [];
+const key = ref('');
+const active = ref('');
+const emit = defineEmits(['select']);
+const value = defineModel();
 for (const [key] of Object.entries(ElementPlusIconsVue)) {
-  iconList.value.push(key)
-  originList.push(key)
+  iconList.value.push(key);
+  originList.push(key);
 }
 
-function onOpen() { }
-function onClose() { }
+function onOpen() {}
+function onClose() {}
 function onSelect(icon) {
-  active.value = icon
-  emit('select', icon)
-  value.value = false
+  active.value = icon;
+  emit('select', icon);
+  value.value = false;
 }
 
 watch(key, (val) => {
   if (val) {
-    iconList.value = originList.filter(name => name.indexOf(val) > -1)
+    iconList.value = originList.filter((name) => name.indexOf(val) > -1);
   } else {
-    iconList.value = originList
+    iconList.value = originList;
   }
-})
+});
 </script>
 <style lang="scss" scoped>
 .icon-ul {
@@ -65,7 +77,7 @@ watch(key, (val) => {
     width: 16.66%;
     box-sizing: border-box;
     height: 108px;
-    padding: 6px 6px 6px 6px;
+    padding: 6px;
     cursor: pointer;
     overflow: hidden;
     align-items: center;
@@ -77,7 +89,7 @@ watch(key, (val) => {
 
     &.active-item {
       background: #e1f3fb;
-      color: #7a6df0
+      color: #7a6df0;
     }
 
     i {
@@ -105,7 +117,7 @@ watch(key, (val) => {
       }
 
       .el-dialog__body {
-        margin: 0 20px 20px 20px;
+        margin: 0 20px 20px;
         padding: 0;
         overflow: auto;
       }

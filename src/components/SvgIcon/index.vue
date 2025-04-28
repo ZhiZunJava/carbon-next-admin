@@ -9,15 +9,15 @@ export default defineComponent({
   props: {
     iconClass: {
       type: String,
-      required: true
+      required: true,
     },
     className: {
       type: String,
-      default: ''
+      default: '',
     },
     color: {
       type: String,
-      default: ''
+      default: '',
     },
   },
   setup(props) {
@@ -25,13 +25,13 @@ export default defineComponent({
       iconName: computed(() => `#icon-${props.iconClass}`),
       svgClass: computed(() => {
         if (props.className) {
-          return `svg-icon ${props.className}`
+          return `svg-icon ${props.className}`;
         }
-        return 'svg-icon'
-      })
-    }
-  }
-})
+        return 'svg-icon';
+      }),
+    };
+  },
+});
 </script>
 
 <style scope lang="scss">
@@ -47,7 +47,7 @@ export default defineComponent({
   width: 1em;
   height: 1em;
   position: relative;
-  fill: currentColor;
+  fill: currentcolor;
   vertical-align: -2px;
 }
 </style>

@@ -15,28 +15,28 @@
 </template>
 
 <script setup>
-import { isExternal } from "@/utils/validate";
+import { isExternal } from '@/utils/validate';
 
 const props = defineProps({
   src: {
     type: String,
-    default: ""
+    default: '',
   },
   width: {
     type: [Number, String],
-    default: ""
+    default: '',
   },
   height: {
     type: [Number, String],
-    default: ""
-  }
+    default: '',
+  },
 });
 
 const realSrc = computed(() => {
   if (!props.src) {
     return;
   }
-  let real_src = props.src.split(",")[0];
+  const real_src = props.src.split(',')[0];
   if (isExternal(real_src)) {
     return real_src;
   }
@@ -47,9 +47,9 @@ const realSrcList = computed(() => {
   if (!props.src) {
     return;
   }
-  let real_src_list = props.src.split(",");
-  let srcList = [];
-  real_src_list.forEach(item => {
+  const real_src_list = props.src.split(',');
+  const srcList = [];
+  real_src_list.forEach((item) => {
     if (isExternal(item)) {
       return srcList.push(item);
     }
@@ -58,13 +58,9 @@ const realSrcList = computed(() => {
   return srcList;
 });
 
-const realWidth = computed(() =>
-  typeof props.width == "string" ? props.width : `${props.width}px`
-);
+const realWidth = computed(() => (typeof props.width === 'string' ? props.width : `${props.width}px`));
 
-const realHeight = computed(() =>
-  typeof props.height == "string" ? props.height : `${props.height}px`
-);
+const realHeight = computed(() => (typeof props.height === 'string' ? props.height : `${props.height}px`));
 </script>
 
 <style lang="scss" scoped>
@@ -72,13 +68,16 @@ const realHeight = computed(() =>
   border-radius: 5px;
   background-color: #ebeef5;
   box-shadow: 0 0 5px 1px #ccc;
+
   :deep(.el-image__inner) {
     transition: all 0.3s;
     cursor: pointer;
+
     &:hover {
       transform: scale(1.2);
     }
   }
+
   :deep(.image-slot) {
     display: flex;
     justify-content: center;

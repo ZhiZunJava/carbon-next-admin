@@ -12,13 +12,23 @@
       </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
-        <el-form v-show="currentTab === 'field' && showField" size="default" label-width="90px" label-position="top"
-          style="">
+        <el-form
+          v-show="currentTab === 'field' && showField"
+          size="default"
+          label-width="90px"
+          label-position="top"
+          style=""
+        >
           <el-form-item v-if="activeData.changeTag" label="组件类型">
-            <el-select v-model="activeData.tagIcon" placeholder="请选择组件类型" :style="{ width: '100%' }" @change="tagChange">
+            <el-select
+              v-model="activeData.tagIcon"
+              placeholder="请选择组件类型"
+              :style="{ width: '100%' }"
+              @change="tagChange"
+            >
               <el-option-group v-for="group in tagList" :key="group.label" :label="group.label">
                 <el-option v-for="item in group.options" :key="item.label" :label="item.label" :value="item.tagIcon">
-                  <svg-icon class="node-icon" :icon-class="item.tagIcon" style="margin-right: 10px;" />
+                  <svg-icon class="node-icon" :icon-class="item.tagIcon" style="margin-right: 10px" />
                   <span> {{ item.label }}</span>
                 </el-option>
               </el-option-group>
@@ -68,16 +78,27 @@
             <el-input v-model="activeData.style.width" placeholder="请输入组件宽度" clearable />
           </el-form-item>
           <el-form-item v-if="activeData.vModel !== undefined" label="默认值">
-            <el-input :value="setDefaultValue(activeData.defaultValue)" placeholder="请输入默认值"
-              @input="onDefaultValueInput" />
+            <el-input
+              :value="setDefaultValue(activeData.defaultValue)"
+              placeholder="请输入默认值"
+              @input="onDefaultValueInput"
+            />
           </el-form-item>
           <el-form-item v-if="activeData.tag === 'el-checkbox-group'" label="至少应选">
-            <el-input-number :value="activeData.min" :min="0" placeholder="至少应选"
-              @input="$set(activeData, 'min', $event ? $event : undefined)" />
+            <el-input-number
+              :value="activeData.min"
+              :min="0"
+              placeholder="至少应选"
+              @input="$set(activeData, 'min', $event ? $event : undefined)"
+            />
           </el-form-item>
           <el-form-item v-if="activeData.tag === 'el-checkbox-group'" label="最多可选">
-            <el-input-number :value="activeData.max" :min="0" placeholder="最多可选"
-              @input="$set(activeData, 'max', $event ? $event : undefined)" />
+            <el-input-number
+              :value="activeData.max"
+              :min="0"
+              placeholder="最多可选"
+              @input="$set(activeData, 'max', $event ? $event : undefined)"
+            />
           </el-form-item>
           <el-form-item v-if="activeData.prepend !== undefined" label="前缀">
             <el-input v-model="activeData.prepend" placeholder="请输入前缀" />
@@ -88,18 +109,14 @@
           <el-form-item v-if="activeData['prefix-icon'] !== undefined" label="前图标">
             <el-input v-model="activeData['prefix-icon']" placeholder="请输入前图标名称">
               <template #append>
-                <el-button icon="Pointer" @click="openIconsDialog('prefix-icon')">
-                  选择
-                </el-button>
+                <el-button icon="Pointer" @click="openIconsDialog('prefix-icon')"> 选择 </el-button>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData['suffix-icon'] !== undefined" label="后图标">
             <el-input v-model="activeData['suffix-icon']" placeholder="请输入后图标名称">
               <template #append>
-                <el-button icon="Pointer" @click="openIconsDialog('suffix-icon')">
-                  选择
-                </el-button>
+                <el-button icon="Pointer" @click="openIconsDialog('suffix-icon')"> 选择 </el-button>
               </template>
             </el-input>
           </el-form-item>
@@ -126,19 +143,13 @@
           </el-form-item>
           <el-form-item v-if="activeData.tag === 'el-input-number'" label="按钮位置">
             <el-radio-group v-model="activeData['controls-position']">
-              <el-radio-button label="">
-                默认
-              </el-radio-button>
-              <el-radio-button label="right">
-                右侧
-              </el-radio-button>
+              <el-radio-button label=""> 默认 </el-radio-button>
+              <el-radio-button label="right"> 右侧 </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData.maxlength !== undefined" label="最多输入">
             <el-input v-model="activeData.maxlength" placeholder="请输入字符长度">
-              <template slot="append">
-                个字符
-              </template>
+              <template #append> 个字符 </template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData['active-text'] !== undefined" label="开启提示">
@@ -148,16 +159,26 @@
             <el-input v-model="activeData['inactive-text']" placeholder="请输入关闭提示" />
           </el-form-item>
           <el-form-item v-if="activeData['active-value'] !== undefined" label="开启值">
-            <el-input :value="setDefaultValue(activeData['active-value'])" placeholder="请输入开启值"
-              @input="onSwitchValueInput($event, 'active-value')" />
+            <el-input
+              :value="setDefaultValue(activeData['active-value'])"
+              placeholder="请输入开启值"
+              @input="onSwitchValueInput($event, 'active-value')"
+            />
           </el-form-item>
           <el-form-item v-if="activeData['inactive-value'] !== undefined" label="关闭值">
-            <el-input :value="setDefaultValue(activeData['inactive-value'])" placeholder="请输入关闭值"
-              @input="onSwitchValueInput($event, 'inactive-value')" />
+            <el-input
+              :value="setDefaultValue(activeData['inactive-value'])"
+              placeholder="请输入关闭值"
+              @input="onSwitchValueInput($event, 'inactive-value')"
+            />
           </el-form-item>
           <el-form-item v-if="activeData.type !== undefined && 'el-date-picker' === activeData.tag" label="时间类型">
-            <el-select v-model="activeData.type" placeholder="请选择时间类型" :style="{ width: '100%' }"
-              @change="dateTypeChange">
+            <el-select
+              v-model="activeData.type"
+              placeholder="请选择时间类型"
+              :style="{ width: '100%' }"
+              @change="dateTypeChange"
+            >
               <el-option v-for="(item, index) in dateOptions" :key="index" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
@@ -177,11 +198,13 @@
           </el-form-item>
           <el-form-item v-if="activeData.fileSize !== undefined" label="文件大小">
             <el-input v-model.number="activeData.fileSize" placeholder="请输入文件大小">
-              <el-select slot="append" v-model="activeData.sizeUnit" :style="{ width: '66px' }">
-                <el-option label="KB" value="KB" />
-                <el-option label="MB" value="MB" />
-                <el-option label="GB" value="GB" />
-              </el-select>
+              <template #append>
+                <el-select v-model="activeData.sizeUnit" :style="{ width: '66px' }">
+                  <el-option label="KB" value="KB" />
+                  <el-option label="MB" value="MB" />
+                  <el-option label="GB" value="GB" />
+                </el-select>
+              </template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData.action !== undefined" label="上传地址">
@@ -189,19 +212,16 @@
           </el-form-item>
           <el-form-item v-if="activeData['list-type'] !== undefined" label="列表类型">
             <el-radio-group v-model="activeData['list-type']" size="small">
-              <el-radio-button label="text">
-                text
-              </el-radio-button>
-              <el-radio-button label="picture">
-                picture
-              </el-radio-button>
-              <el-radio-button label="picture-card">
-                picture-card
-              </el-radio-button>
+              <el-radio-button label="text"> text </el-radio-button>
+              <el-radio-button label="picture"> picture </el-radio-button>
+              <el-radio-button label="picture-card"> picture-card </el-radio-button>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="activeData.buttonText !== undefined" v-show="'picture-card' !== activeData['list-type']"
-            label="按钮文字">
+          <el-form-item
+            v-if="activeData.buttonText !== undefined"
+            v-show="'picture-card' !== activeData['list-type']"
+            label="按钮文字"
+          >
             <el-input v-model="activeData.buttonText" placeholder="请输入按钮文字" />
           </el-form-item>
           <el-form-item v-if="activeData['range-separator'] !== undefined" label="分隔符">
@@ -215,16 +235,25 @@
           </el-form-item>
           <template v-if="['el-checkbox-group', 'el-radio-group', 'el-select'].indexOf(activeData.tag) > -1">
             <el-divider>选项</el-divider>
-            <draggable :list="activeData.options" :animation="340" group="selectItem" handle=".option-drag"
-              item-key="label">
+            <draggable
+              :list="activeData.options"
+              :animation="340"
+              group="selectItem"
+              handle=".option-drag"
+              item-key="label"
+            >
               <template #item="{ element, index }">
                 <div :key="index" class="select-item">
                   <div class="select-line-icon option-drag">
                     <i class="el-icon-s-operation" />
                   </div>
                   <el-input v-model="element.label" placeholder="选项名" size="small" />
-                  <el-input placeholder="选项值" size="small" :value="element.value"
-                    @input="setOptionValue(element, $event)" />
+                  <el-input
+                    placeholder="选项值"
+                    size="small"
+                    :value="element.value"
+                    @input="setOptionValue(element, $event)"
+                  />
                   <div class="close-btn select-line-icon" @click="activeData.options.splice(index, 1)">
                     <el-icon>
                       <Remove />
@@ -234,8 +263,14 @@
               </template>
             </draggable>
             <div>
-              <el-button icon="CirclePlus" style="margin-left: 8px; margin-top: 10px;" text bg type="primary"
-                @click="addSelectItem">
+              <el-button
+                icon="CirclePlus"
+                style="margin-left: 8px; margin-top: 10px"
+                text
+                bg
+                type="primary"
+                @click="addSelectItem"
+              >
                 添加选项
               </el-button>
             </div>
@@ -246,12 +281,8 @@
             <el-divider>选项</el-divider>
             <el-form-item label="数据类型">
               <el-radio-group v-model="activeData.dataType" size="small">
-                <el-radio-button label="dynamic">
-                  动态数据
-                </el-radio-button>
-                <el-radio-button label="static">
-                  静态数据
-                </el-radio-button>
+                <el-radio-button label="dynamic"> 动态数据 </el-radio-button>
+                <el-radio-button label="static"> 静态数据 </el-radio-button>
               </el-radio-group>
             </el-form-item>
 
@@ -267,11 +298,23 @@
               </el-form-item>
             </template>
 
-            <el-tree v-if="activeData.dataType === 'static'" draggable :data="activeData.options" node-key="id"
-              :expand-on-click-node="false" :render-content="renderContent" />
+            <el-tree
+              v-if="activeData.dataType === 'static'"
+              draggable
+              :data="activeData.options"
+              node-key="id"
+              :expand-on-click-node="false"
+              :render-content="renderContent"
+            />
             <div v-if="activeData.dataType === 'static'">
-              <el-button icon="CirclePlus" style="margin-left: 0; margin-top: 10px;" type="primary" text bg
-                @click="addTreeItem">
+              <el-button
+                icon="CirclePlus"
+                style="margin-left: 0; margin-top: 10px"
+                type="primary"
+                text
+                bg
+                @click="addTreeItem"
+              >
                 添加父级
               </el-button>
             </div>
@@ -280,12 +323,8 @@
 
           <el-form-item v-if="activeData.optionType !== undefined" label="选项样式">
             <el-radio-group v-model="activeData.optionType">
-              <el-radio-button label="default">
-                默认
-              </el-radio-button>
-              <el-radio-button label="button">
-                按钮
-              </el-radio-button>
+              <el-radio-button label="default"> 默认 </el-radio-button>
+              <el-radio-button label="button"> 按钮 </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData['active-color'] !== undefined" label="开启颜色">
@@ -310,30 +349,38 @@
           <el-form-item v-if="activeData.range !== undefined" label="范围选择">
             <el-switch v-model="activeData.range" @change="rangeChange" />
           </el-form-item>
-          <el-form-item v-if="activeData.border !== undefined && activeData.optionType === 'default'" label="是否带边框">
+          <el-form-item
+            v-if="activeData.border !== undefined && activeData.optionType === 'default'"
+            label="是否带边框"
+          >
             <el-switch v-model="activeData.border" />
           </el-form-item>
           <el-form-item v-if="activeData.tag === 'el-color-picker'" label="颜色格式">
-            <el-select v-model="activeData['color-format']" placeholder="请选择颜色格式" :style="{ width: '100%' }"
-              @change="colorFormatChange">
-              <el-option v-for="(item, index) in colorFormatOptions" :key="index" :label="item.label"
-                :value="item.value" />
+            <el-select
+              v-model="activeData['color-format']"
+              placeholder="请选择颜色格式"
+              :style="{ width: '100%' }"
+              @change="colorFormatChange"
+            >
+              <el-option
+                v-for="(item, index) in colorFormatOptions"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="activeData.size !== undefined &&
-            (activeData.optionType === 'button' ||
-              activeData.border ||
-              activeData.tag === 'el-color-picker')" label="选项尺寸">
+          <el-form-item
+            v-if="
+              activeData.size !== undefined &&
+              (activeData.optionType === 'button' || activeData.border || activeData.tag === 'el-color-picker')
+            "
+            label="选项尺寸"
+          >
             <el-radio-group v-model="activeData.size">
-              <el-radio-button label="large">
-                较大
-              </el-radio-button>
-              <el-radio-button label="default">
-                默认
-              </el-radio-button>
-              <el-radio-button label="small">
-                较小
-              </el-radio-button>
+              <el-radio-button label="large"> 较大 </el-radio-button>
+              <el-radio-button label="default"> 默认 </el-radio-button>
+              <el-radio-button label="small"> 较小 </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData['show-word-limit'] !== undefined" label="输入统计">
@@ -384,7 +431,7 @@
             <el-tree :data="[activeData]" :props="layoutTreeProps" node-key="renderKey" default-expand-all draggable>
               <template #default="{ node, data }">
                 <span class="node-label">
-                  <svg-icon class="node-icon" :icon-class="data.tagIcon" style="margin-right: 5px;" />
+                  <svg-icon class="node-icon" :icon-class="data.tagIcon" style="margin-right: 5px" />
                   {{ node.label }}
                 </span>
               </template>
@@ -402,13 +449,19 @@
               <el-form-item label="表达式">
                 <el-input v-model="item.pattern" placeholder="请输入正则" />
               </el-form-item>
-              <el-form-item label="错误提示" style="margin-bottom:0">
+              <el-form-item label="错误提示" style="margin-bottom: 0">
                 <el-input v-model="item.message" placeholder="请输入错误提示" />
               </el-form-item>
             </div>
             <div>
-              <el-button icon="CirclePlus" style="margin-left: 0; margin-top: 10px;" type="primary" text bg
-                @click="addReg">
+              <el-button
+                icon="CirclePlus"
+                style="margin-left: 0; margin-top: 10px"
+                type="primary"
+                text
+                bg
+                @click="addReg"
+              >
                 添加规则
               </el-button>
             </div>
@@ -427,28 +480,16 @@
           </el-form-item>
           <el-form-item label="表单尺寸">
             <el-radio-group v-model="formConf.size">
-              <el-radio-button label="large">
-                较大
-              </el-radio-button>
-              <el-radio-button label="default">
-                默认
-              </el-radio-button>
-              <el-radio-button label="small">
-                较小
-              </el-radio-button>
+              <el-radio-button label="large"> 较大 </el-radio-button>
+              <el-radio-button label="default"> 默认 </el-radio-button>
+              <el-radio-button label="small"> 较小 </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="标签对齐">
             <el-radio-group v-model="formConf.labelPosition">
-              <el-radio-button label="left">
-                左对齐
-              </el-radio-button>
-              <el-radio-button label="right">
-                右对齐
-              </el-radio-button>
-              <el-radio-button label="top">
-                顶部对齐
-              </el-radio-button>
+              <el-radio-button label="left"> 左对齐 </el-radio-button>
+              <el-radio-button label="right"> 右对齐 </el-radio-button>
+              <el-radio-button label="top"> 顶部对齐 </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="标签宽度">
@@ -470,19 +511,20 @@
       </el-scrollbar>
     </div>
     <icons-dialog v-model="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
-    <treeNode-dialog v-model="dialogVisible" @commit="addNode" />
-
+    <tree-node-dialog v-model="dialogVisible" @commit="addNode" />
   </div>
 </template>
 
 <script setup>
-import draggable from "vuedraggable/dist/vuedraggable.common"
-import { isNumberStr } from '@/utils/index'
-import IconsDialog from './IconsDialog'
-import TreeNodeDialog from './TreeNodeDialog'
-import { inputComponents, selectComponents } from '@/utils/generator/config'
+import draggable from 'vuedraggable/dist/vuedraggable.common';
 
-const { proxy } = getCurrentInstance()
+import { inputComponents, selectComponents } from '@/utils/generator/config';
+import { isNumberStr } from '@/utils/index';
+
+import IconsDialog from './IconsDialog';
+import TreeNodeDialog from './TreeNodeDialog';
+
+const { proxy } = getCurrentInstance();
 const dateTimeFormat = {
   date: 'YYYY-MM-DD',
   week: 'YYYY 第 ww 周',
@@ -491,13 +533,13 @@ const dateTimeFormat = {
   datetime: 'YYYY-MM-DD HH:mm:ss',
   daterange: 'YYYY-MM-DD',
   monthrange: 'YYYY-MM',
-  datetimerange: 'YYYY-MM-DD HH:mm:ss'
-}
+  datetimerange: 'YYYY-MM-DD HH:mm:ss',
+};
 const props = defineProps({
   showField: Boolean,
   activeData: Object,
-  formConf: Object
-})
+  formConf: Object,
+});
 
 const data = reactive({
   currentTab: 'field',
@@ -508,269 +550,287 @@ const data = reactive({
   dateTypeOptions: [
     {
       label: '日(date)',
-      value: 'date'
+      value: 'date',
     },
     {
       label: '周(week)',
-      value: 'week'
+      value: 'week',
     },
     {
       label: '月(month)',
-      value: 'month'
+      value: 'month',
     },
     {
       label: '年(year)',
-      value: 'year'
+      value: 'year',
     },
     {
       label: '日期时间(datetime)',
-      value: 'datetime'
-    }
+      value: 'datetime',
+    },
   ],
   dateRangeTypeOptions: [
     {
       label: '日期范围(daterange)',
-      value: 'daterange'
+      value: 'daterange',
     },
     {
       label: '月范围(monthrange)',
-      value: 'monthrange'
+      value: 'monthrange',
     },
     {
       label: '日期时间范围(datetimerange)',
-      value: 'datetimerange'
-    }
+      value: 'datetimerange',
+    },
   ],
   colorFormatOptions: [
     {
       label: 'hex',
-      value: 'hex'
+      value: 'hex',
     },
     {
       label: 'rgb',
-      value: 'rgb'
+      value: 'rgb',
     },
     {
       label: 'rgba',
-      value: 'rgba'
+      value: 'rgba',
     },
     {
       label: 'hsv',
-      value: 'hsv'
+      value: 'hsv',
     },
     {
       label: 'hsl',
-      value: 'hsl'
-    }
+      value: 'hsl',
+    },
   ],
   justifyOptions: [
     {
       label: 'start',
-      value: 'start'
+      value: 'start',
     },
     {
       label: 'end',
-      value: 'end'
+      value: 'end',
     },
     {
       label: 'center',
-      value: 'center'
+      value: 'center',
     },
     {
       label: 'space-around',
-      value: 'space-around'
+      value: 'space-around',
     },
     {
       label: 'space-between',
-      value: 'space-between'
-    }
+      value: 'space-between',
+    },
   ],
   layoutTreeProps: {
     label(data, node) {
-      return data.componentName || `${data.label}: ${data.vModel}`
-    }
-  }
-})
+      return data.componentName || `${data.label}: ${data.vModel}`;
+    },
+  },
+});
 
-const { currentTab, currentNode, dialogVisible, iconsVisible, currentIconModel, dateTypeOptions, dateRangeTypeOptions, colorFormatOptions, justifyOptions, layoutTreeProps } = toRefs(data)
+const {
+  currentTab,
+  currentNode,
+  dialogVisible,
+  iconsVisible,
+  currentIconModel,
+  dateTypeOptions,
+  dateRangeTypeOptions,
+  colorFormatOptions,
+  justifyOptions,
+  layoutTreeProps,
+} = toRefs(data);
 
-const documentLink = computed(() => props.activeData.document || 'https://element-plus.org/zh-CN/guide/installation')
+const documentLink = computed(() => props.activeData.document || 'https://element-plus.org/zh-CN/guide/installation');
 
 const dateOptions = computed(() => {
   if (props.activeData.type !== undefined && props.activeData.tag === 'el-date-picker') {
     if (props.activeData['start-placeholder'] === undefined) {
-      return dateTypeOptions.value
+      return dateTypeOptions.value;
     }
-    return dateRangeTypeOptions.value
+    return dateRangeTypeOptions.value;
   }
-  return []
-})
+  return [];
+});
 
 const tagList = ref([
   {
     label: '输入型组件',
-    options: inputComponents
+    options: inputComponents,
   },
   {
     label: '选择型组件',
-    options: selectComponents
-  }
-])
+    options: selectComponents,
+  },
+]);
 
-const emit = defineEmits(['tag-change'])
+const emit = defineEmits(['tag-change']);
 
 function addReg() {
   props.activeData.regList.push({
     pattern: '',
-    message: ''
-  })
+    message: '',
+  });
 }
 function addSelectItem() {
   props.activeData.options.push({
     label: '',
-    value: ''
-  })
+    value: '',
+  });
 }
 
 function addTreeItem() {
-  ++proxy.idGlobal
-  dialogVisible.value = true
-  currentNode.value = props.activeData.options
+  ++proxy.idGlobal;
+  dialogVisible.value = true;
+  currentNode.value = props.activeData.options;
 }
 
 function renderContent(h, { node, data, store }) {
-  return h('div', {
-    class: "custom-tree-node"
-  }, [
-    h('span', node.label),
-    h('span', {
-      class: "node-operation"
-    }, [
-      h(resolveComponent('el-link'), {
-        type: "primary",
-        icon: "Plus",
-        underline: false,
-        onClick: () => {
-          append(data)
-
-        }
-      }),
-      h(resolveComponent('el-link'), {
-        type: "danger",
-        icon: "Delete",
-        underline: false,
-        style: "margin-left: 5px;",
-        onClick: () => {
-          remove(node, data)
-        }
-      })
-    ])
-  ])
+  return h(
+    'div',
+    {
+      class: 'custom-tree-node',
+    },
+    [
+      h('span', node.label),
+      h(
+        'span',
+        {
+          class: 'node-operation',
+        },
+        [
+          h(resolveComponent('el-link'), {
+            type: 'primary',
+            icon: 'Plus',
+            underline: false,
+            onClick: () => {
+              append(data);
+            },
+          }),
+          h(resolveComponent('el-link'), {
+            type: 'danger',
+            icon: 'Delete',
+            underline: false,
+            style: 'margin-left: 5px;',
+            onClick: () => {
+              remove(node, data);
+            },
+          }),
+        ],
+      ),
+    ],
+  );
 }
 function append(data) {
   if (!data.children) {
-    data.children = []
+    data.children = [];
   }
-  dialogVisible.value = true
-  currentNode.value = data.children
+  dialogVisible.value = true;
+  currentNode.value = data.children;
 }
 function remove(node, data) {
-  const { parent } = node
-  const children = parent.data.children || parent.data
-  const index = children.findIndex(d => d.id === data.id)
-  children.splice(index, 1)
+  const { parent } = node;
+  const children = parent.data.children || parent.data;
+  const index = children.findIndex((d) => d.id === data.id);
+  children.splice(index, 1);
 }
 function addNode(data) {
-  currentNode.value.push(data)
+  currentNode.value.push(data);
 }
 
 function setOptionValue(item, val) {
-  item.value = isNumberStr(val) ? +val : val
+  item.value = isNumberStr(val) ? +val : val;
 }
 function setDefaultValue(val) {
   if (Array.isArray(val)) {
-    return val.join(',')
+    return val.join(',');
   }
   if (['string', 'number'].indexOf(val) > -1) {
-    return val
+    return val;
   }
   if (typeof val === 'boolean') {
-    return `${val}`
+    return `${val}`;
   }
-  return val
+  return val;
 }
 
 function onDefaultValueInput(str) {
   if (Array.isArray(props.activeData.defaultValue)) {
     // 数组
-    props.activeData.defaultValue = str.split(',').map(val => (isNumberStr(val) ? +val : val))
+    props.activeData.defaultValue = str.split(',').map((val) => (isNumberStr(val) ? +val : val));
   } else if (['true', 'false'].indexOf(str) > -1) {
     // 布尔
-    props.activeData.defaultValue = JSON.parse(str)
+    props.activeData.defaultValue = JSON.parse(str);
   } else {
     // 字符串和数字
-    props.activeData.defaultValue = isNumberStr(str) ? +str : str
+    props.activeData.defaultValue = isNumberStr(str) ? +str : str;
   }
 }
 
 function onSwitchValueInput(val, name) {
   if (['true', 'false'].indexOf(val) > -1) {
-    props.activeData[name] = JSON.parse(val)
+    props.activeData[name] = JSON.parse(val);
   } else {
-    props.activeData[name] = isNumberStr(val) ? +val : val
+    props.activeData[name] = isNumberStr(val) ? +val : val;
   }
 }
 
 function setTimeValue(val, type) {
-  const valueFormat = type === 'week' ? dateTimeFormat.date : val
-  props.activeData.defaultValue = null
-  props.activeData['value-format'] = valueFormat
-  props.activeData.format = val
+  const valueFormat = type === 'week' ? dateTimeFormat.date : val;
+  props.activeData.defaultValue = null;
+  props.activeData['value-format'] = valueFormat;
+  props.activeData.format = val;
 }
 
 function spanChange(val) {
-  props.formConf.span = val
+  props.formConf.span = val;
 }
 
 function multipleChange(val) {
-  props.activeData.defaultValue = val ? [] : ''
+  props.activeData.defaultValue = val ? [] : '';
 }
 
 function dateTypeChange(val) {
-  setTimeValue(dateTimeFormat[val], val)
+  setTimeValue(dateTimeFormat[val], val);
 }
 
 function rangeChange(val) {
-  props.activeData.defaultValue = val ? [props.activeData.min, props.activeData.max] : props.activeData.min
+  props.activeData.defaultValue = val ? [props.activeData.min, props.activeData.max] : props.activeData.min;
 }
 
 function rateTextChange(val) {
-  if (val) props.activeData['show-score'] = false
+  if (val) props.activeData['show-score'] = false;
 }
 
 function rateScoreChange(val) {
-  if (val) props.activeData['show-text'] = false
+  if (val) props.activeData['show-text'] = false;
 }
 
 function colorFormatChange(val) {
-  props.activeData.defaultValue = null
-  props.activeData['show-alpha'] = val.indexOf('a') > -1
-  props.activeData.renderKey = +new Date() // 更新renderKey,重新渲染该组件
+  props.activeData.defaultValue = null;
+  props.activeData['show-alpha'] = val.indexOf('a') > -1;
+  props.activeData.renderKey = +new Date(); // 更新renderKey,重新渲染该组件
 }
 
 function openIconsDialog(model) {
-  iconsVisible.value = true
-  currentIconModel.value = model
+  iconsVisible.value = true;
+  currentIconModel.value = model;
 }
 
 function setIcon(val) {
-  props.activeData[currentIconModel.value] = val
+  props.activeData[currentIconModel.value] = val;
 }
 
 function tagChange(tagIcon) {
-  let target = inputComponents.find(item => item.tagIcon === tagIcon)
-  if (!target) target = selectComponents.find(item => item.tagIcon === tagIcon)
-  emit('tag-change', target)
+  let target = inputComponents.find((item) => item.tagIcon === tagIcon);
+  if (!target) target = selectComponents.find((item) => item.tagIcon === tagIcon);
+  emit('tag-change', target);
 }
 </script>
 
@@ -806,7 +866,6 @@ function tagChange(tagIcon) {
       .el-scrollbar__view {
         padding: 30px 20px;
       }
-
     }
   }
 }
@@ -827,7 +886,7 @@ function tagChange(tagIcon) {
     width: 16px;
     height: 16px;
     line-height: 16px;
-    background: rgba(0, 0, 0, .2);
+    background: rgb(0 0 0 / 20%);
     border-radius: 50%;
     color: #fff;
     z-index: 1;
@@ -846,12 +905,12 @@ function tagChange(tagIcon) {
     color: #f56c6c;
   }
 
-  & .el-input+.el-input {
+  & .el-input + .el-input {
     margin-left: 4px;
   }
 }
 
-.select-item+.select-item {
+.select-item + .select-item {
   margin-top: 4px;
 }
 
@@ -892,7 +951,7 @@ function tagChange(tagIcon) {
   cursor: pointer;
   background: #409eff;
   z-index: 1;
-  border-radius: 0 0 6px 0;
+  border-radius: 0 0 6px;
   justify-content: center;
   align-items: center;
   color: #fff;

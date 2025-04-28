@@ -3,7 +3,7 @@
     <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in">
         <keep-alive :include="tagsViewStore.cachedViews">
-          <component v-if="!route.meta.link" :is="Component" :key="route.path"/>
+          <component :is="Component" v-if="!route.meta.link" :key="route.path" />
         </keep-alive>
       </transition>
     </router-view>
@@ -12,23 +12,24 @@
 </template>
 
 <script setup>
-import iframeToggle from "./IframeToggle/index"
-import useTagsViewStore from '@/store/modules/tagsView'
+import useTagsViewStore from '@/store/modules/tagsView';
 
-const route = useRoute()
-const tagsViewStore = useTagsViewStore()
+import iframeToggle from './IframeToggle/index';
+
+const route = useRoute();
+const tagsViewStore = useTagsViewStore();
 
 onMounted(() => {
-  addIframe()
-})
+  addIframe();
+});
 
 watch(route, () => {
-  addIframe()
-})
+  addIframe();
+});
 
 function addIframe() {
   if (route.meta.link) {
-    useTagsViewStore().addIframeView(route)
+    useTagsViewStore().addIframeView(route);
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'show': show }" class="header-search">
+  <div :class="{ show: show }" class="header-search">
     <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
     <el-select
       ref="headerSearchSelectRef"
@@ -12,16 +12,22 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="option in options" :key="option.item.path" :value="option.item" :label="option.item.title.join(' > ')" />
+      <el-option
+        v-for="option in options"
+        :key="option.item.path"
+        :value="option.item"
+        :label="option.item.title.join(' > ')"
+      />
     </el-select>
   </div>
 </template>
 
 <script setup>
-import Fuse from 'fuse.js'
-import { getNormalPath } from '@/utils/ruoyi'
-import { isHttp } from '@/utils/validate'
-import usePermissionStore from '@/store/modules/permission'
+import Fuse from 'fuse.js';
+
+import usePermissionStore from '@/store/modules/permission';
+import { getNormalPath } from '@/utils/ruoyi';
+import { isHttp } from '@/utils/validate';
 
 const search = ref('');
 const options = ref([]);
@@ -33,36 +39,34 @@ const router = useRouter();
 const routes = computed(() => usePermissionStore().defaultRoutes);
 
 function click() {
-  show.value = !show.value
+  show.value = !show.value;
   if (show.value) {
-    headerSearchSelectRef.value && headerSearchSelectRef.value.focus()
+    headerSearchSelectRef.value && headerSearchSelectRef.value.focus();
   }
-};
+}
 function close() {
-  headerSearchSelectRef.value && headerSearchSelectRef.value.blur()
-  options.value = []
-  show.value = false
+  headerSearchSelectRef.value && headerSearchSelectRef.value.blur();
+  options.value = [];
+  show.value = false;
 }
 function change(val) {
-  const path = val.path;
-  const query = val.query;
+  const { path } = val;
+  const { query } = val;
   if (isHttp(path)) {
     // http(s):// 路径新窗口打开
-    const pindex = path.indexOf("http");
-    window.open(path.substr(pindex, path.length), "_blank");
+    const pindex = path.indexOf('http');
+    window.open(path.substr(pindex, path.length), '_blank');
+  } else if (query) {
+    router.push({ path, query: JSON.parse(query) });
   } else {
-    if (query) {
-      router.push({ path: path, query: JSON.parse(query) });
-    } else {
-      router.push(path)
-    }
+    router.push(path);
   }
 
-  search.value = ''
-  options.value = []
+  search.value = '';
+  options.value = [];
   nextTick(() => {
-    show.value = false
-  })
+    show.value = false;
+  });
 }
 function initFuse(list) {
   fuse.value = new Fuse(list, {
@@ -71,82 +75,87 @@ function initFuse(list) {
     location: 0,
     distance: 100,
     minMatchCharLength: 1,
-    keys: [{
-      name: 'title',
-      weight: 0.7
-    }, {
-      name: 'path',
-      weight: 0.3
-    }]
-  })
+    keys: [
+      {
+        name: 'title',
+        weight: 0.7,
+      },
+      {
+        name: 'path',
+        weight: 0.3,
+      },
+    ],
+  });
 }
 // Filter out the routes that can be displayed in the sidebar
 // And generate the internationalized title
 function generateRoutes(routes, basePath = '', prefixTitle = []) {
-  let res = []
+  let res = [];
 
   for (const r of routes) {
     // skip hidden router
-    if (r.hidden) { continue }
-    const p = r.path.length > 0 && r.path[0] === '/' ? r.path : '/' + r.path;
+    if (r.hidden) {
+      continue;
+    }
+    const p = r.path.length > 0 && r.path[0] === '/' ? r.path : `/${r.path}`;
     const data = {
       path: !isHttp(r.path) ? getNormalPath(basePath + p) : r.path,
-      title: [...prefixTitle]
-    }
+      title: [...prefixTitle],
+    };
 
     if (r.meta && r.meta.title) {
-      data.title = [...data.title, r.meta.title]
+      data.title = [...data.title, r.meta.title];
 
       if (r.redirect !== 'noRedirect') {
         // only push the routes with title
         // special case: need to exclude parent router without redirect
-        res.push(data)
+        res.push(data);
       }
     }
     if (r.query) {
-      data.query = r.query
+      data.query = r.query;
     }
 
     // recursive child routes
     if (r.children) {
-      const tempRoutes = generateRoutes(r.children, data.path, data.title)
+      const tempRoutes = generateRoutes(r.children, data.path, data.title);
       if (tempRoutes.length >= 1) {
-        res = [...res, ...tempRoutes]
+        res = [...res, ...tempRoutes];
       }
     }
   }
-  return res
+  return res;
 }
 function querySearch(query) {
   if (query !== '') {
-    options.value = fuse.value.search(query)
+    options.value = fuse.value.search(query);
   } else {
-    options.value = []
+    options.value = [];
   }
 }
 
 onMounted(() => {
   searchPool.value = generateRoutes(routes.value);
-})
+});
 
 watchEffect(() => {
-  searchPool.value = generateRoutes(routes.value)
-})
+  searchPool.value = generateRoutes(routes.value);
+});
 
 watch(show, (value) => {
   if (value) {
-    document.body.addEventListener('click', close)
+    document.body.addEventListener('click', close);
   } else {
-    document.body.removeEventListener('click', close)
+    document.body.removeEventListener('click', close);
   }
-})
+});
 
 watch(searchPool, (list) => {
-  initFuse(list)
-})
+  initFuse(list);
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .header-search {
   font-size: 0 !important;
 

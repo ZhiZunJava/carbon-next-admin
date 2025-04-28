@@ -2,18 +2,21 @@
   <div class="container">
     <div class="left-board">
       <div class="logo-wrapper">
-        <div class="logo">
-          <img :src="logo" alt="logo"> Form Generator
-        </div>
+        <div class="logo"><img :src="logo" alt="logo" /> Form Generator</div>
       </div>
       <el-scrollbar class="left-scrollbar">
         <div class="components-list">
-          <div class="components-title">
-            <svg-icon icon-class="component" />输入型组件
-          </div>
-          <draggable class="components-draggable" :list="inputComponents"
-            :group="{ name: 'componentsGroup', pull: 'clone', put: false }" :clone="cloneComponent"
-            draggable=".components-item" :sort="false" @end="onEnd" item-key="label">
+          <div class="components-title"><svg-icon icon-class="component" />输入型组件</div>
+          <draggable
+            class="components-draggable"
+            :list="inputComponents"
+            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :clone="cloneComponent"
+            draggable=".components-item"
+            :sort="false"
+            item-key="label"
+            @end="onEnd"
+          >
             <template #item="{ element, index }">
               <div :key="index" class="components-item" @click="addComponent(element)">
                 <div class="components-body">
@@ -23,12 +26,17 @@
               </div>
             </template>
           </draggable>
-          <div class="components-title">
-            <svg-icon icon-class="component" />选择型组件
-          </div>
-          <draggable class="components-draggable" :list="selectComponents"
-            :group="{ name: 'componentsGroup', pull: 'clone', put: false }" :clone="cloneComponent"
-            draggable=".components-item" :sort="false" @end="onEnd" item-key="label">
+          <div class="components-title"><svg-icon icon-class="component" />选择型组件</div>
+          <draggable
+            class="components-draggable"
+            :list="selectComponents"
+            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :clone="cloneComponent"
+            draggable=".components-item"
+            :sort="false"
+            item-key="label"
+            @end="onEnd"
+          >
             <template #item="{ element, index }">
               <div :key="index" class="components-item" @click="addComponent(element)">
                 <div class="components-body">
@@ -38,12 +46,17 @@
               </div>
             </template>
           </draggable>
-          <div class="components-title">
-            <svg-icon icon-class="component" /> 布局型组件
-          </div>
-          <draggable class="components-draggable" :list="layoutComponents"
-            :group="{ name: 'componentsGroup', pull: 'clone', put: false }" :clone="cloneComponent"
-            draggable=".components-item" :sort="false" @end="onEnd" item-key="label">
+          <div class="components-title"><svg-icon icon-class="component" /> 布局型组件</div>
+          <draggable
+            class="components-draggable"
+            :list="layoutComponents"
+            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :clone="cloneComponent"
+            draggable=".components-item"
+            :sort="false"
+            item-key="label"
+            @end="onEnd"
+          >
             <template #item="{ element, index }">
               <div :key="index" class="components-item" @click="addComponent(element)">
                 <div class="components-body">
@@ -58,256 +71,275 @@
     </div>
     <div class="center-board">
       <div class="action-bar">
-        <el-button icon="Download" type="primary" text @click="download">
-          导出vue文件
-        </el-button>
-        <el-button class="copy-btn-main" icon="DocumentCopy" type="primary" text @click="copy">
-          复制代码
-        </el-button>
-        <el-button class="delete-btn" icon="Delete" text @click="empty" type="danger">
-          清空
-        </el-button>
+        <el-button icon="Download" type="primary" text @click="download"> 导出vue文件 </el-button>
+        <el-button class="copy-btn-main" icon="DocumentCopy" type="primary" text @click="copy"> 复制代码 </el-button>
+        <el-button class="delete-btn" icon="Delete" text type="danger" @click="empty"> 清空 </el-button>
       </div>
       <el-scrollbar class="center-scrollbar">
         <el-row class="center-board-row" :gutter="formConf.gutter">
-          <el-form :size="formConf.size" :label-position="formConf.labelPosition" :disabled="formConf.disabled"
-            :label-width="formConf.labelWidth + 'px'">
-            <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
-              item-key="label">
+          <el-form
+            :size="formConf.size"
+            :label-position="formConf.labelPosition"
+            :disabled="formConf.disabled"
+            :label-width="formConf.labelWidth + 'px'"
+          >
+            <draggable
+              class="drawing-board"
+              :list="drawingList"
+              :animation="340"
+              group="componentsGroup"
+              item-key="label"
+            >
               <template #item="{ element, index }">
-                <draggable-item :key="element.renderKey" :drawing-list="drawingList" :element="element" :index="index"
-                  :active-id="activeId" :form-conf="formConf" @activeItem="activeFormItem" @copyItem="drawingItemCopy"
-                  @deleteItem="drawingItemDelete" />
+                <draggable-item
+                  :key="element.renderKey"
+                  :drawing-list="drawingList"
+                  :element="element"
+                  :index="index"
+                  :active-id="activeId"
+                  :form-conf="formConf"
+                  @active-item="activeFormItem"
+                  @copy-item="drawingItemCopy"
+                  @delete-item="drawingItemDelete"
+                />
               </template>
             </draggable>
-            <div v-show="!drawingList.length" class="empty-info">
-              从左侧拖入或点选组件进行表单设计
-            </div>
+            <div v-show="!drawingList.length" class="empty-info">从左侧拖入或点选组件进行表单设计</div>
           </el-form>
         </el-row>
       </el-scrollbar>
     </div>
-    <right-panel :active-data="activeData" :form-conf="formConf" :show-field="!!drawingList.length"
-      @tag-change="tagChange" />
+    <right-panel
+      :active-data="activeData"
+      :form-conf="formConf"
+      :show-field="!!drawingList.length"
+      @tag-change="tagChange"
+    />
 
-    <code-type-dialog v-model="dialogVisible" title="选择生成类型" :showFileName="showFileName" @confirm="generate" />
-    <input id="copyNode" type="hidden">
+    <code-type-dialog v-model="dialogVisible" title="选择生成类型" :show-file-name="showFileName" @confirm="generate" />
+    <input id="copyNode" type="hidden" />
   </div>
 </template>
 
 <script setup>
-import draggable from "vuedraggable/dist/vuedraggable.common"
-import ClipboardJS from 'clipboard'
-import beautifier from 'js-beautify'
-import logo from '@/assets/logo/logo.png'
-import { inputComponents, selectComponents, layoutComponents, formConf as formConfData } from '@/utils/generator/config'
-import { beautifierConf } from '@/utils/index'
-import drawingDefalut from '@/utils/generator/drawingDefalut'
-import { makeUpHtml, vueTemplate, vueScript, cssStyle } from '@/utils/generator/html'
-import { makeUpJs } from '@/utils/generator/js'
-import { makeUpCss } from '@/utils/generator/css'
-import Download from '@/plugins/download'
-import { ElNotification } from 'element-plus'
-import DraggableItem from './DraggableItem'
-import RightPanel from './RightPanel'
-import CodeTypeDialog from './CodeTypeDialog'
-import { onMounted, watch } from 'vue'
+import ClipboardJS from 'clipboard';
+import { ElNotification } from 'element-plus';
+import beautifier from 'js-beautify';
+import { onMounted, watch } from 'vue';
+import draggable from 'vuedraggable/dist/vuedraggable.common';
 
-const drawingList = ref(drawingDefalut)
-const { proxy } = getCurrentInstance()
-const dialogVisible = ref(false)
-const showFileName = ref(false)
-const operationType = ref('')
-const idGlobal = ref(100)
-const activeData = ref(drawingDefalut[0])
-const activeId = ref(drawingDefalut[0].formId)
-const generateConf = ref(null)
-const formData = ref({})
-const formConf = ref(formConfData)
-let oldActiveId
-let tempActiveData
+import logo from '@/assets/logo/logo.png';
+import Download from '@/plugins/download';
+import {
+  formConf as formConfData,
+  inputComponents,
+  layoutComponents,
+  selectComponents,
+} from '@/utils/generator/config';
+import { makeUpCss } from '@/utils/generator/css';
+import drawingDefalut from '@/utils/generator/drawingDefalut';
+import { cssStyle, makeUpHtml, vueScript, vueTemplate } from '@/utils/generator/html';
+import { makeUpJs } from '@/utils/generator/js';
+import { beautifierConf } from '@/utils/index';
+
+import CodeTypeDialog from './CodeTypeDialog';
+import DraggableItem from './DraggableItem';
+import RightPanel from './RightPanel';
+
+const drawingList = ref(drawingDefalut);
+const { proxy } = getCurrentInstance();
+const dialogVisible = ref(false);
+const showFileName = ref(false);
+const operationType = ref('');
+const idGlobal = ref(100);
+const activeData = ref(drawingDefalut[0]);
+const activeId = ref(drawingDefalut[0].formId);
+const generateConf = ref(null);
+const formData = ref({});
+const formConf = ref(formConfData);
+let oldActiveId;
+let tempActiveData;
 
 function activeFormItem(element) {
-  activeData.value = element
-  activeId.value = element.formId
+  activeData.value = element;
+  activeId.value = element.formId;
 }
 function copy() {
-  dialogVisible.value = true
-  showFileName.value = false
-  operationType.value = 'copy'
+  dialogVisible.value = true;
+  showFileName.value = false;
+  operationType.value = 'copy';
 }
 function download() {
-  dialogVisible.value = true
-  showFileName.value = true
-  operationType.value = 'download'
+  dialogVisible.value = true;
+  showFileName.value = true;
+  operationType.value = 'download';
 }
 function empty() {
   proxy.$modal.confirm('确定要清空所有组件吗？', '提示', { type: 'warning' }).then(() => {
-      idGlobal.value = 100
-      drawingList.value = []
-    }
-  )
+    idGlobal.value = 100;
+    drawingList.value = [];
+  });
 }
 
 function onEnd(obj, a) {
   if (obj.from !== obj.to) {
-    activeData.value = tempActiveData
-    activeId.value = idGlobal.value
+    activeData.value = tempActiveData;
+    activeId.value = idGlobal.value;
   }
 }
 
 function addComponent(item) {
-  const clone = cloneComponent(item)
-  drawingList.value.push(clone)
-  activeFormItem(clone)
+  const clone = cloneComponent(item);
+  drawingList.value.push(clone);
+  activeFormItem(clone);
 }
 
 function cloneComponent(origin) {
-  const clone = JSON.parse(JSON.stringify(origin))
-  clone.formId = ++idGlobal.value
-  clone.span = formConf.value.span
-  clone.renderKey = +new Date() // 改变renderKey后可以实现强制更新组件
-  if (!clone.layout) clone.layout = 'colFormItem'
+  const clone = JSON.parse(JSON.stringify(origin));
+  clone.formId = ++idGlobal.value;
+  clone.span = formConf.value.span;
+  clone.renderKey = +new Date(); // 改变renderKey后可以实现强制更新组件
+  if (!clone.layout) clone.layout = 'colFormItem';
   if (clone.layout === 'colFormItem') {
-    clone.vModel = `field${idGlobal.value}`
-    clone.placeholder !== undefined && (clone.placeholder += clone.label)
-    tempActiveData = clone
+    clone.vModel = `field${idGlobal.value}`;
+    clone.placeholder !== undefined && (clone.placeholder += clone.label);
+    tempActiveData = clone;
   } else if (clone.layout === 'rowFormItem') {
-    delete clone.label
-    clone.componentName = `row${idGlobal.value}`
-    clone.gutter = formConf.value.gutter
-    tempActiveData = clone
+    delete clone.label;
+    clone.componentName = `row${idGlobal.value}`;
+    clone.gutter = formConf.value.gutter;
+    tempActiveData = clone;
   }
-  return tempActiveData
+  return tempActiveData;
 }
 
 function drawingItemCopy(item, parent) {
-  let clone = JSON.parse(JSON.stringify(item))
-  clone = createIdAndKey(clone)
-  parent.push(clone)
-  activeFormItem(clone)
+  let clone = JSON.parse(JSON.stringify(item));
+  clone = createIdAndKey(clone);
+  parent.push(clone);
+  activeFormItem(clone);
 }
 
-
 function createIdAndKey(item) {
-  item.formId = ++idGlobal.value
-  item.renderKey = +new Date()
+  item.formId = ++idGlobal.value;
+  item.renderKey = +new Date();
   if (item.layout === 'colFormItem') {
-    item.vModel = `field${idGlobal.value}`
+    item.vModel = `field${idGlobal.value}`;
   } else if (item.layout === 'rowFormItem') {
-    item.componentName = `row${idGlobal.value}`
+    item.componentName = `row${idGlobal.value}`;
   }
   if (Array.isArray(item.children)) {
-    item.children = item.children.map(childItem => createIdAndKey(childItem))
+    item.children = item.children.map((childItem) => createIdAndKey(childItem));
   }
-  return item
+  return item;
 }
 
 function drawingItemDelete(index, parent) {
-  parent.splice(index, 1)
+  parent.splice(index, 1);
   nextTick(() => {
-    const len = drawingList.value.length
+    const len = drawingList.value.length;
     if (len) {
-      activeFormItem(drawingList.value[len - 1])
+      activeFormItem(drawingList.value[len - 1]);
     }
-  })
+  });
 }
 
 function tagChange(newTag) {
-  newTag = cloneComponent(newTag)
-  newTag.vModel = activeData.value.vModel
-  newTag.formId = activeId.value
-  newTag.span = activeData.value.span
-  delete activeData.value.tag
-  delete activeData.value.tagIcon
-  delete activeData.value.document
-  Object.keys(newTag).forEach(key => {
-    if (activeData.value[key] !== undefined
-      && typeof activeData.value[key] === typeof newTag[key]) {
-      newTag[key] = activeData.value[key]
+  newTag = cloneComponent(newTag);
+  newTag.vModel = activeData.value.vModel;
+  newTag.formId = activeId.value;
+  newTag.span = activeData.value.span;
+  delete activeData.value.tag;
+  delete activeData.value.tagIcon;
+  delete activeData.value.document;
+  Object.keys(newTag).forEach((key) => {
+    if (activeData.value[key] !== undefined && typeof activeData.value[key] === typeof newTag[key]) {
+      newTag[key] = activeData.value[key];
     }
-  })
-  activeData.value = newTag
-  updateDrawingList(newTag, drawingList.value)
+  });
+  activeData.value = newTag;
+  updateDrawingList(newTag, drawingList.value);
 }
 
-
 function updateDrawingList(newTag, list) {
-  const index = list.findIndex(item => item.formId === activeId.value)
+  const index = list.findIndex((item) => item.formId === activeId.value);
   if (index > -1) {
-    list.splice(index, 1, newTag)
+    list.splice(index, 1, newTag);
   } else {
-    list.forEach(item => {
-      if (Array.isArray(item.children)) updateDrawingList(newTag, item.children)
-    })
+    list.forEach((item) => {
+      if (Array.isArray(item.children)) updateDrawingList(newTag, item.children);
+    });
   }
 }
 function generate(data) {
-  generateConf.value = data
+  generateConf.value = data;
   nextTick(() => {
     switch (operationType.value) {
       case 'copy':
-        execCopy(data)
-        break
+        execCopy(data);
+        break;
       case 'download':
-        execDownload(data)
-        break
+        execDownload(data);
+        break;
       default:
-        break
+        break;
     }
-  })
+  });
 }
 
 function execDownload(data) {
-  const codeStr = generateCode()
-  const blob = new Blob([codeStr], { type: 'text/plain;charset=utf-8' })
-  Download.saveAs(blob, data.fileName)
+  const codeStr = generateCode();
+  const blob = new Blob([codeStr], { type: 'text/plain;charset=utf-8' });
+  Download.saveAs(blob, data.fileName);
 }
 
 function execCopy(data) {
-  document.getElementById('copyNode').click()
+  document.getElementById('copyNode').click();
 }
 function AssembleFormData() {
-  formData.value = { fields: JSON.parse(JSON.stringify(drawingList.value)), ...formConf.value }
+  formData.value = { fields: JSON.parse(JSON.stringify(drawingList.value)), ...formConf.value };
 }
 function generateCode() {
-  const { type } = generateConf.value
-  AssembleFormData()
-  const script = vueScript(makeUpJs(formData.value, type))
-  const html = vueTemplate(makeUpHtml(formData.value, type))
-  const css = cssStyle(makeUpCss(formData.value))
-  return beautifier.html(html + script + css, beautifierConf.html)
+  const { type } = generateConf.value;
+  AssembleFormData();
+  const script = vueScript(makeUpJs(formData.value, type));
+  const html = vueTemplate(makeUpHtml(formData.value, type));
+  const css = cssStyle(makeUpCss(formData.value));
+  return beautifier.html(html + script + css, beautifierConf.html);
 }
-watch(() => activeData.value.label, (val, oldVal) => {
-  if (
-    activeData.value.placeholder === undefined
-    || !activeData.value.tag
-    || oldActiveId !== activeId.value
-  ) {
-    return
-  }
-  activeData.value.placeholder = activeData.value.placeholder.replace(oldVal, '') + val
-})
-watch(activeId, (val) => {
-  oldActiveId = val
-}, { immediate: true })
+watch(
+  () => activeData.value.label,
+  (val, oldVal) => {
+    if (activeData.value.placeholder === undefined || !activeData.value.tag || oldActiveId !== activeId.value) {
+      return;
+    }
+    activeData.value.placeholder = activeData.value.placeholder.replace(oldVal, '') + val;
+  },
+);
+watch(
+  activeId,
+  (val) => {
+    oldActiveId = val;
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   const clipboard = new ClipboardJS('#copyNode', {
-    text: trigger => {
-      const codeStr = generateCode()
-      ElNotification({ title: '成功', message: '代码已复制到剪切板，可粘贴。', type: 'success' })
-      return codeStr
-    }
-  })
-  clipboard.on('error', e => {
-    proxy.$modal.msgError('代码复制失败')
-  })
-})
+    text: (trigger) => {
+      const codeStr = generateCode();
+      ElNotification({ title: '成功', message: '代码已复制到剪切板，可粘贴。', type: 'success' });
+      return codeStr;
+    },
+  });
+  clipboard.on('error', (e) => {
+    proxy.$modal.msgError('代码复制失败');
+  });
+});
 </script>
 
-<style lang='scss'>
-$lighterBlue: #409EFF;
+<style lang="scss">
+$lighterBlue: #409eff;
 
 .container {
   position: relative;
@@ -339,7 +371,7 @@ $lighterBlue: #409EFF;
         font-size: 17px;
         white-space: nowrap;
 
-        >img {
+        > img {
           width: 30px;
           height: 30px;
           vertical-align: top;
@@ -350,7 +382,7 @@ $lighterBlue: #409EFF;
           vertical-align: sub;
           margin-left: 15px;
 
-          >img {
+          > img {
             height: 22px;
           }
         }
@@ -414,8 +446,6 @@ $lighterBlue: #409EFF;
               }
             }
           }
-
-
         }
       }
     }
@@ -432,7 +462,6 @@ $lighterBlue: #409EFF;
       height: 42px;
       padding: 0 15px;
       box-sizing: border-box;
-      ;
       border: 1px solid var(--el-border-color-extra-light);
       border-top: none;
       border-left: none;
@@ -441,7 +470,7 @@ $lighterBlue: #409EFF;
       justify-content: flex-end;
 
       u .delete-btn {
-        color: #F56C6C;
+        color: #f56c6c;
       }
     }
 
@@ -457,10 +486,10 @@ $lighterBlue: #409EFF;
       }
 
       .center-board-row {
-        padding: 12px 12px 15px 12px;
+        padding: 12px 12px 15px;
         box-sizing: border-box;
 
-        &>.el-form {
+        & > .el-form {
           // 69 = 12+15+42
           height: calc(100vh - 50px - 40px - 69px);
           flex: 1;
@@ -481,13 +510,13 @@ $lighterBlue: #409EFF;
               overflow: hidden;
 
               &::before {
-                content: " ";
+                content: ' ';
                 position: absolute;
                 left: 0;
                 right: 0;
                 top: 0;
                 height: 3px;
-                background: rgb(89, 89, 223);
+                background: rgb(89 89 223);
                 z-index: 2;
               }
             }
@@ -499,17 +528,17 @@ $lighterBlue: #409EFF;
             }
 
             .active-from-item {
-              &>.el-form-item {
+              & > .el-form-item {
                 background: var(--el-border-color-extra-light);
                 border-radius: 6px;
               }
 
-              &>.drawing-item-copy,
-              &>.drawing-item-delete {
+              & > .drawing-item-copy,
+              & > .drawing-item-delete {
                 display: initial;
               }
 
-              &>.component-name {
+              & > .component-name {
                 color: $lighterBlue;
               }
 
@@ -527,7 +556,7 @@ $lighterBlue: #409EFF;
             position: relative;
             cursor: move;
 
-            &.unfocus-bordered:not(.activeFromItem)>div:first-child {
+            &.unfocus-bordered:not(.activeFromItem) > div:first-child {
               border: 1px dashed #ccc;
             }
 
@@ -582,19 +611,19 @@ $lighterBlue: #409EFF;
           .drawing-item,
           .drawing-row-item {
             &:hover {
-              &>.el-form-item {
+              & > .el-form-item {
                 background: var(--el-border-color-extra-light);
                 border-radius: 6px;
               }
 
-              &>.drawing-item-copy,
-              &>.drawing-item-delete {
+              & > .drawing-item-copy,
+              & > .drawing-item-delete {
                 display: initial;
               }
             }
 
-            &>.drawing-item-copy,
-            &>.drawing-item-delete {
+            & > .drawing-item-copy,
+            & > .drawing-item-delete {
               display: none;
               position: absolute;
               top: -10px;
@@ -609,7 +638,7 @@ $lighterBlue: #409EFF;
               z-index: 1;
             }
 
-            &>.drawing-item-copy {
+            & > .drawing-item-copy {
               right: 56px;
               border-color: $lighterBlue;
               color: $lighterBlue;
@@ -621,14 +650,14 @@ $lighterBlue: #409EFF;
               }
             }
 
-            &>.drawing-item-delete {
+            & > .drawing-item-delete {
               right: 24px;
-              border-color: #F56C6C;
-              color: #F56C6C;
+              border-color: #f56c6c;
+              color: #f56c6c;
               background: #fff;
 
               &:hover {
-                background: #F56C6C;
+                background: #f56c6c;
                 color: #fff;
               }
             }
@@ -644,7 +673,6 @@ $lighterBlue: #409EFF;
             color: #ccb1ea;
             letter-spacing: 4px;
           }
-
         }
       }
     }
