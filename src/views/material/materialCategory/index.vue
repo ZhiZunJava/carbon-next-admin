@@ -143,7 +143,7 @@ function getList() {
 function getTreeselect() {
   listMaterialCategory().then((response) => {
     materialCategoryOptions.value = [];
-    const data = { id: 0, name: '顶级节点', children: [] };
+    const data = { id: 0, name: '分类', children: [] };
     data.children = proxy.handleTree(response.data, 'id', 'parentId');
     materialCategoryOptions.value.push(data);
   });

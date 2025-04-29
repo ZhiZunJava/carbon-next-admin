@@ -116,10 +116,6 @@
                 >
               </el-col>
 
-              <el-col :span="1.5">
-                <el-button type="warning" plain icon="Download" @click="open1 = true">打开</el-button>
-              </el-col>
-
               <right-toolbar v-model:show-search="showSearch" @query-table="getList"></right-toolbar>
             </el-row>
 
@@ -224,8 +220,6 @@
         </div>
       </template>
     </el-dialog>
-
-    <material-select :open="open1" @on-cancel="open1 = false"></material-select>
   </div>
 </template>
 
@@ -244,11 +238,8 @@ import {
 } from '@/api/material/materialInfo';
 import useAppStore from '@/store/modules/app';
 
-import MaterialSelect from '../../../components/Material/MaterialSelect.vue';
-
 const { proxy } = getCurrentInstance();
 const { material_type } = proxy.useDict('material_type');
-const open1 = ref(false);
 const appStore = useAppStore();
 const materialInfoList = ref([]);
 const materialCategoryOptions = ref([]);
@@ -287,7 +278,7 @@ const { queryParams, form, rules } = toRefs(data);
 function getTreeSelect() {
   listMaterialCategory().then((response) => {
     materialCategoryOptions.value = [];
-    const data = { id: 0, name: '顶级节点', children: [] };
+    const data = { id: 0, name: '分类', children: [] };
     data.children = proxy.handleTree(response.data, 'id', 'parentId');
     materialCategoryOptions.value.push(data);
   });
