@@ -100,5 +100,15 @@
     .el-input, .el-cascader, .el-select, .el-autocomplete {
       width: 240px;
     }
+
+    &.sub-table {
+      .el-input, .el-cascader, .el-select, .el-autocomplete {
+        width: 185px;
+      }
+    }
+
+    &.sub-table:not(.is-error) {
+      margin-bottom: 0px;
+    }
   }
 }

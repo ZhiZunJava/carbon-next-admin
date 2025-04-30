@@ -1,7 +1,7 @@
 <template>
   <el-dialog
-    v-model="props.open"
-    :title="props.title"
+    v-model="open"
+    :title="title"
     :close-on-click-modal="false"
     :show-close="false"
     width="80%"
@@ -73,7 +73,7 @@
             </el-form>
 
             <el-row :gutter="10" class="mb8">
-              <el-col v-if="!props.isSingle" :span="1.5">
+              <el-col v-if="!isSingle" :span="1.5">
                 <el-button type="primary" plain icon="Plus" @click="handleSelect">选择</el-button>
               </el-col>
               <el-col :span="1.5">
@@ -83,7 +83,7 @@
             </el-row>
 
             <el-table v-loading="loading" :data="materialInfoList" @selection-change="handleSelectionChange">
-              <el-table-column v-if="!props.isSingle" type="selection" width="55" align="center" />
+              <el-table-column v-if="!isSingle" type="selection" width="55" align="center" />
               <el-table-column label="编号" align="center" prop="id" />
               <el-table-column label="物料编码" align="center" prop="code" />
               <el-table-column label="物料名称" align="center" prop="name" />
@@ -145,6 +145,8 @@ const props = defineProps({
   },
 });
 
+const { open, title, isSingle } = toRefs(props);
+
 const emits = defineEmits(['onSelected', 'onCancel']);
 
 const appStore = useAppStore();
@@ -152,7 +154,6 @@ const materialInfoList = ref([]);
 const selectionList = ref([]);
 const materialCategoryOptions = ref([]);
 const categoryName = ref('');
-const open = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
 const ids = ref([]);
