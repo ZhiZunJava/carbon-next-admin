@@ -84,14 +84,18 @@
                     @selection-change="handleMesFactoryModelDetailSelectionChange" ref="mesFactoryModelDetail">
                     <el-table-column type="selection" width="50" align="center" />
                     <el-table-column label="序号" align="center" prop="index" width="50" />
-                    <el-table-column label="设备" prop="equipmentId" width="150">
+                    <el-table-column label="设备" prop="equipmentId" width="200">
                         <template #default="scope">
-
-                            <el-select v-model="scope.row.equipmentId" placeholder="请选择设备编号" clearable
-                                @change="handleEquipmentChange(scope.row, scope.$index)">
-                                <el-option v-for="dict in comQuery_query_equipment" :key="dict.value"
-                                    :label="dict.label" :value="parseInt(dict.value)"></el-option>
-                            </el-select>
+                            <el-form-item class="sub-table"
+                                v-if="scope.$index > -1"
+                                :prop="`mesFactoryModelDetailList.${scope.$index}.equipmentId`"
+                                :rules="rules.equipmentId">
+                                <el-select v-model="scope.row.equipmentId" placeholder="请选择设备编号" clearable
+                                    @change="handleEquipmentChange(scope.row, scope.$index)">
+                                    <el-option v-for="dict in comQuery_query_equipment" :key="dict.value"
+                                        :label="dict.label" :value="parseInt(dict.value)"></el-option>
+                                </el-select>
+                            </el-form-item>
                         </template>
                     </el-table-column>
                     <el-table-column label="编码" align="center" prop="code" />
@@ -146,8 +150,15 @@ const data = reactive({
         productLineName: null,
     },
     rules: {
+        materialName: [
+            { required: true, message: "物料不能为空", trigger: "blur" }
+        ],
         productLineName: [
-            { required: true, message: "生产线名称不能为空", trigger: "blur" }
+            { required: true, message: "生产线名称不能为空", trigger: "blur" },
+            { max: 20, message: "生产线名称最多20个字符", trigger: "blur" }
+        ],
+        equipmentId: [
+            { required: true, message: "设备不能为空", trigger: "change" }
         ],
     }
 });
@@ -318,6 +329,11 @@ function rowMesFactoryModelDetailIndex({ row, rowIndex }) {
 function handleAddMesFactoryModelDetail() {
     let obj = {};
     obj.equipmentId = "";
+    obj.code = "";
+    obj.model = "";
+    obj.manufacturer = "";
+    obj.productDate = "";
+    obj.batchNo = "";
     mesFactoryModelDetailList.value.push(obj);
 }
 
@@ -345,6 +361,13 @@ function handleExport() {
         ...queryParams.value
     }, `factoryModel_${new Date().getTime()}.xlsx`)
 }
+
+watch(mesFactoryModelDetailList, (val) => {
+    form.value.mesFactoryModelDetailList = val;
+}, {
+    deep: true,
+    immediate: true
+})
 
 getList();
 </script>
